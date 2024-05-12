@@ -40,8 +40,6 @@ export const  GetArticle = (id : number)  => {
     }
   
     FetchArticle(id)
-    openModal()
-
    
    return(
         <>
@@ -86,6 +84,7 @@ export const  GetArticle = (id : number)  => {
                                     <div>
                                         {article?.content}
                                     </div>
+                                    
                                     <button onClick={closeModal}>close </button>
 
                                 </div>
