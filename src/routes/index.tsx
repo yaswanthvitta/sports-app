@@ -4,6 +4,8 @@ import AccountLayout from "../pages/layout/account";
 import Logout from "../pages/logout";
 import MatchContainer from "../pages/livematches/LiveMatchContainer";
 import LiveMatches from "../pages/livematches";
+import ArticleContainer from "../pages/articles/ArticleContainer";
+import Article from "../pages/articles";
 
 
 const Signin = React.lazy(() => import("../pages/signin"));
@@ -37,6 +39,8 @@ const router = createBrowserRouter([
         <>
         <MatchContainer/>
         <LiveMatches/>
+        <ArticleContainer/>
+        <Article/>
         </> )
       }
     ],
