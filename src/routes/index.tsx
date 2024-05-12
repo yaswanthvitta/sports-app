@@ -1,5 +1,5 @@
 import React from "react";
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import AccountLayout from "../pages/layout/account";
 import Logout from "../pages/logout";
 import MatchContainer from "../pages/livematches/LiveMatchContainer";
@@ -12,6 +12,7 @@ const Signup = React.lazy(() => import("../pages/signup"));
 
 
 const router = createBrowserRouter([
+  { path: "/", element: <Navigate to="/matches" replace /> },
   {
     path: "/signin", 
     element: <Signin />
