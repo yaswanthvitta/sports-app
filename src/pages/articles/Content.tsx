@@ -28,8 +28,6 @@ export const  GetArticle = (id : number)  => {
   const fetchData = async (id:number) => {
     const response = await fetch(`${API_ENDPOINT}/articles/${id}`);
     const json = await response.json();
-    console.log(json)
-    console.log('json')
     setListing(json);
     };
       
