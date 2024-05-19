@@ -25,7 +25,7 @@ const SigninForm: React.FC = () => {
       
       const data = await response.json();
 
-      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('authToken', data.auth_token);
       localStorage.setItem('userData', JSON.stringify(data.user));
       navigate("/matches");
 

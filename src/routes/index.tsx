@@ -6,6 +6,12 @@ import MatchContainer from "../pages/livematches/LiveMatchContainer";
 import LiveMatches from "../pages/livematches";
 import ArticleContainer from "../pages/articles/ArticleContainer";
 import Article from "../pages/articles";
+import SportContainer from "../pages/favourites/SportsContainer";
+import TeamContainer from "../pages/favourites/TeamsContainer";
+import Favourites from "../pages/favourites";
+import Updatepass from "../pages/password";
+import ProtectedRoute from "./ProtectedRoute";
+import PreferenceItems from "../pages/preferences/UpdatePreferences";
 
 
 const Signin = React.lazy(() => import("../pages/signin"));
@@ -25,23 +31,46 @@ const router = createBrowserRouter([
   },
   { 
     path: "/logout", 
-    element: <Logout /> 
+    element:(
+    <ProtectedRoute>
+     <Logout />
+    </ProtectedRoute>
+  ) 
+  },
+  { 
+    path: "/updatepass", 
+    element:( 
+    <ProtectedRoute>
+      <Updatepass />
+    </ProtectedRoute> )
   },
   {
     path: "/",
     element: (
+      <>
         <AccountLayout/>
+        </>
     ),
      children:[
       {
-        path: "matches",
+        path: "/matches",
         element:( 
         <>
         <MatchContainer/>
+        <SportContainer/>
+        <TeamContainer/>
         <LiveMatches/>
         <ArticleContainer/>
         <Article/>
-        </> )
+        </> ),
+      },
+      {
+        path:"preferences",
+        element:(<>
+        <SportContainer/>
+       <TeamContainer/>
+       <ArticleContainer/>
+       <PreferenceItems/></>)
       }
     ],
   }

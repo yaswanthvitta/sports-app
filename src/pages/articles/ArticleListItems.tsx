@@ -1,15 +1,77 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
-import React from "react";
+import { SetStateAction, useEffect, useState } from "react";
+//import React from "react";
 import { useArticleState } from "../../context/articles/context";
 import { GetArticle } from "./Content";
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 
 
 
 
-const ArticleItems : React.FC = () => {
-  
+export default function ArticleItems(this: any) {
+
+  const authenticated = !!localStorage.getItem("authToken");
+
+  const categories = [
+    {
+      name: 'Recent',
+      posts: [
+        {
+          id: 1,
+          title: 'Does drinking coffee make you smarter?',
+          date: '5h ago',
+          commentCount: 5,
+          shareCount: 2,
+        },
+        {
+          id: 2,
+          title: "So you've bought coffee... now what?",
+          date: '2h ago',
+          commentCount: 3,
+          shareCount: 2,
+        },
+      ],
+    },
+    {
+      name: 'Popular',
+      posts: [
+        {
+          id: 1,
+          title: 'Is tech making coffee better or worse?',
+          date: 'Jan 7',
+          commentCount: 29,
+          shareCount: 16,
+        },
+        {
+          id: 2,
+          title: 'The most innovative things happening in coffee',
+          date: 'Mar 19',
+          commentCount: 24,
+          shareCount: 12,
+        },
+      ],
+    },
+    {
+      name: 'Trending',
+      posts: [
+        {
+          id: 1,
+          title: 'Ask Me Anything: 10 answers to your questions about coffee',
+          date: '2d ago',
+          commentCount: 9,
+          shareCount: 5,
+        },
+        {
+          id: 2,
+          title: "The worst advice we've ever heard about coffee",
+          date: '4d ago',
+          commentCount: 1,
+          shareCount: 2,
+        },
+      ],
+    },
+  ]
+
   const people = [
     { id: 1, name: 'Durward Reynolds' },
     { id: 2, name: 'Kenton Towne' },
@@ -19,15 +81,25 @@ const ArticleItems : React.FC = () => {
   ]
   
   const state: any = useArticleState();
-  const [selectedPerson, setSelectedPerson] = useState(people[0]);
-  
+
+  const [selectedPerson, setSelectedPerson] = useState<{
+    target: any;name:string
+}>(people[0]);
+
  
   let { articles } = state;
   const {isLoading, isError, errorMessage} = state;
 
-  function load(){
+  function load (value:any){
+    setSelectedPerson(value)
+    if (value.name==='Durward Reynolds'){
     articles=articles.sort((a:any,b:any)=>a.date.localeCompare(b.date))
+    }
+    if (value.name==='Kenton Towne'){
+      articles=articles.sort((a:any,b:any)=>a.title.localeCompare(b.title))
+      }
   }
+  
 
  
 
@@ -41,19 +113,65 @@ const ArticleItems : React.FC = () => {
 
   
 
-
-
+  
 
  
   
 
   return (
     <>
-      <Listbox value={selectedPerson} onChange={setSelectedPerson}>
-        <ListboxButton>{selectedPerson.name}</ListboxButton>
-        <ListboxOptions anchor="bottom">
+      {/* { authenticated && 
+              <div className="flex w-full justify-center pt-24 px-4">
+                <div className="w-full max-w-md">
+                  <TabGroup>
+                    <TabList className="flex gap-4">
+                      {categories.map(({ name }) => (
+                        <Tab
+                          key={name}
+                          className="rounded-full py-1 px-3 text-sm/6 font-semibold text-black focus:outline-none data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-black"
+                        >
+                          {name}
+                        </Tab>
+                      ))}
+                    </TabList>
+                    <TabPanels className="mt-3">
+                      {categories.map(({ name, posts }) => (
+                        <TabPanel key={name} className="rounded-xl bg-white/5 p-3">
+                          <ul>
+                            {posts.map((post) => (
+                              <li key={post.id} className="relative rounded-md p-3 text-sm/6 transition hover:bg-white/5">
+                                <a href="#" className="font-semibold text-black">
+                                  <span className="absolute inset-0" />
+                                  {post.title}
+                                </a>
+                                <ul className="flex gap-2 text-black/50" aria-hidden="true">
+                                  <li>{post.date}</li>
+                                  <li aria-hidden="true">&middot;</li>
+                                  <li>{post.commentCount} comments</li>
+                                  <li aria-hidden="true">&middot;</li>
+                                  <li>{post.shareCount} shares</li>
+                                </ul>
+                              </li>
+                            ))}
+                          </ul>
+                        </TabPanel>
+                      ))}
+                    </TabPanels>
+                  </TabGroup>
+                </div>
+              </div>
+      } */}
+      <Listbox value={selectedPerson}   onChange={(e)=>load(e)}>
+        <ListboxButton className="w-[300px] h-12 border rounded-md py-2 px-3 my-2 ml-3 text-black-700 text-base text-left">{selectedPerson.name}</ListboxButton>
+        <ListboxOptions anchor="bottom" className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
           {people.map((person) => (
-            <ListboxOption key={person.id} value={person} className="data-[focus]:bg-blue-100">
+            <ListboxOption key={person.id} value={person} className={({ active }) =>
+              `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                active
+                  ? "bg-blue-100 text-blue-900"
+                  : "text-gray-900"
+              }`
+            }>
               {person.name}
             </ListboxOption>
           ))}
@@ -72,7 +190,7 @@ const ArticleItems : React.FC = () => {
               <p className="m-1">{article.summary}.....</p>
               <div className="flex flex-row justify-between pr-5 mt-2">
                 <p>{article.date.substring(0, 10)}</p>
-                <p>{GetArticle(article.id)}</p>
+                <GetArticle{...{id:article.id}}/>
               </div>
             </div>
           </div>
@@ -82,4 +200,3 @@ const ArticleItems : React.FC = () => {
   );
 }
 
-export default ArticleItems;

@@ -23,8 +23,9 @@ export interface Team {
   name: string
 }
 
-export const  GetMatch = (id : number)  => {
+export const  GetMatch = (props:any)  => {
 
+  const {id}=props
   const [List, setListing] = useState<Match|null>(null);
 
   const fetchData = async (id:number) => {

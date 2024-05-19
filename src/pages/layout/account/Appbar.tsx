@@ -18,6 +18,7 @@ let navigation = []
     if (authenticated) {
         userNavigation = [ 
             { name: 'Sign out', href: '/logout' },
+            { name: 'Update Password', href: '/updatepass' },
           ]
     }
     else{
@@ -32,7 +33,7 @@ let navigation = []
 
     if (authenticated) {
         navigation = [
-            { name: 'Preferences', href: '/account/projects', current: false, image:AdjustmentsVerticalIcon },
+            { name: 'Preferences', href: '/preferences', current: false, image:AdjustmentsVerticalIcon },
         ]
         }
     else{

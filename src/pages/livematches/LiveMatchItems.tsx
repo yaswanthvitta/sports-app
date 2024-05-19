@@ -33,8 +33,9 @@ export default function LiveMatchItems() {
           return match.isRunning === true;
         })
         .map((match:any) => (
-
-          <div> {GetMatch(match.id)} </div>
+          <div key={match.id}>
+          <GetMatch{...{id:match.id}}/>
+          </div>
           
         )) 
       }

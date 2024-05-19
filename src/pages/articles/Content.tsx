@@ -11,7 +11,8 @@ export interface Article {
 }
 
 
-export const  GetArticle = (id : number)  => {
+export const  GetArticle = (props : any)  => {
+    const {id} = props;
 
     const [isOpen, setIsOpen] = useState(false)
 
