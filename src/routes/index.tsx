@@ -8,7 +8,6 @@ import ArticleContainer from "../pages/articles/ArticleContainer";
 import Article from "../pages/articles";
 import SportContainer from "../pages/favourites/SportsContainer";
 import TeamContainer from "../pages/favourites/TeamsContainer";
-import Favourites from "../pages/favourites";
 import Updatepass from "../pages/password";
 import ProtectedRoute from "./ProtectedRoute";
 import PreferenceItems from "../pages/preferences/UpdatePreferences";

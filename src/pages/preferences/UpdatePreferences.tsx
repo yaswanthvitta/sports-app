@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import React from "react";
 //import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from "@headlessui/react";
@@ -100,7 +101,7 @@ async function savePreferences(){
       });
 
       if (!response.ok) {
-        throw new Error('preferences update failed');s
+        throw new Error('preferences update failed');
       }
 
       console.log('preferences update successful');
@@ -117,7 +118,7 @@ async function savePreferences(){
   return (
     <>
       <div>
-      {sports.map(({ name }, index) => {
+      {sports.map(( name:any , index:any) => {
           return (
             <div key={index}>
               <div className="toppings-list-item">
@@ -139,7 +140,7 @@ async function savePreferences(){
       </div>
         <br/>
       <div>
-      {teams.map(({ name }, index) => {
+      {teams.map(( name:any , index:any) => {
           return (
             <div key={index}>
               <div className="toppings-list-item">

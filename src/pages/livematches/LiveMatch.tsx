@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { API_ENDPOINT } from "../../config/constants";
 import { ArrowPathRoundedSquareIcon } from "@heroicons/react/24/outline";
@@ -26,7 +27,7 @@ export interface Team {
 export const  GetMatch = (props:any)  => {
 
   const {id}=props
-  const [List, setListing] = useState<Match|null>(null);
+  const [List, setListing] = useState<any|null>(null);
 
   const fetchData = async (id:number) => {
     const response = await fetch(`${API_ENDPOINT}/matches/${id}`);
