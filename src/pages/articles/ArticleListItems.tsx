@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 //import React from "react";
@@ -201,9 +200,9 @@ if(sports.length>0 && (news.length===1||news.length===0)){
                       ))}
                     </TabList>
                     <TabPanels className="mt-1">
-                      {news.map(( name, posts:any ) => (
+                      {news.map(({ name, posts }) => (
                         <TabPanel key={name} className="rounded-xl bg-white/5 p-3">
-                            {posts.map((article:any) => (
+                            {Object.values(posts).map((article:any) => (
                               <div key={article.id} className="flex flex-row w-[900px] block bg-white border border-gray-200 roundedbackgroundImage:-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
                               <div className="mr-3 ">
                                 <img src={article.thumbnail} style={{ objectFit: "cover", objectPosition: "center" }} className="w-[170px] h-[200px]" alt="Thumbnail" />

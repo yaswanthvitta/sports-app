@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 // First we will import the API_ENDPOINT constant from the `config` folder
 import { API_ENDPOINT } from '../../config/constants';
@@ -27,6 +28,7 @@ const token = localStorage.getItem("authToken") ?? "";
       console.log('Password update successful');
       
       const data = await response.json();
+      console.log(data)
 
       navigate("/matches");
 
