@@ -11,7 +11,7 @@ import { GetArticle } from "../articles/Content";
 export default function FavouriteItems() {
   
   const sportslist: any = useSportState();
-  let favteam   , favarticle;
+  let favteam :any  , favarticle;
 
   const { sports} = sportslist;
   const {isLoadingsport, isErrorsport, errorMessagesport} = sportslist;
@@ -54,12 +54,10 @@ export default function FavouriteItems() {
 
   if(selectedSport===undefined && sports!==undefined){
     setSelectedSport(sports[0])
-    console.log(sports)
     return <span>Loading...</span>;
   }
   if(selectedTeam===undefined && teams!==undefined){
     setSelectedTeam(teams[0])
-    console.log(teams)
     return <span>Loading...</span>;
   }
 
@@ -82,7 +80,6 @@ export default function FavouriteItems() {
         }
     }) 
 
-      console.log(favarticle)
       setFavouriteArticles(favarticle)
 }
 

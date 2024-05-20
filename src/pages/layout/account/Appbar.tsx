@@ -1,9 +1,9 @@
 /* eslint-disable no-empty-pattern */
 import { UserCircleIcon , AdjustmentsVerticalIcon} from '@heroicons/react/24/outline'
-import Logo from "/root/sports-app/src/assets/images/logo.png"
+import Logo from "../../../assets/images/logo.png"
 import { Link, useLocation } from "react-router-dom"
 import { useState, useContext, Fragment } from 'react';
-import { ThemeContext } from "/root/sports-app/src/context/theme";
+import { ThemeContext } from "../../../context/theme";
 import { Disclosure, Menu, Transition, Switch } from '@headlessui/react'
 
 

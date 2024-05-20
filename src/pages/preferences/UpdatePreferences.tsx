@@ -5,12 +5,12 @@ import { useSportState } from "../../context/sports/context";
 import { useTeamState } from "../../context/teams/context";
 import { useState } from "react";
 import { useArticleState } from "../../context/articles/context";
+import { API_ENDPOINT } from "../../config/constants";
 //import { GetArticle } from "../articles/Content";
 
 
 export default function PreferenceItems() {
-  
-  let updatedCheckedState:any;
+  const token = localStorage.getItem("authToken") ?? "";
   const sportslist: any = useSportState();
   const { sports} = sportslist;
   const {isLoadingsport, isErrorsport, errorMessagesport} = sportslist;
@@ -67,7 +67,50 @@ const handleOnChange = (position:any) => {
       index === position ? !item : item
     );
     setSportsState(sportsState)
-    console.log(sportsState)
+}
+
+const handleOnChangeTeams = (position:any) => {
+  teamsState = teamsState.map((item:any, index:any) =>
+    index === position ? !item : item
+  );
+  setTeamsState(teamsState)
+}
+
+async function savePreferences(){
+    let preferences:any;
+    sportsState.map((val: boolean,index: string | number)=>{
+      if (val===true){
+        preferences={...preferences,[index]:sports[index].name}
+      }
+    })
+    teamsState.map((val: boolean,index: string | number)=>{
+      if (val===true){
+        preferences={...preferences,[sports.length+index]:teams[index].name}
+      }
+    })
+
+    console.log(preferences)
+
+    try {
+      
+      const response = await fetch(`${API_ENDPOINT}/user/preferences`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ preferences }),
+      });
+
+      if (!response.ok) {
+        throw new Error('preferences update failed');s
+      }
+
+      console.log('preferences update successful');
+      
+      const data = await response.json();
+      console.log(data)
+
+    } catch (error) {
+      console.error('preferences update failed:', error);
+    }
 }
  
 
@@ -94,6 +137,30 @@ const handleOnChange = (position:any) => {
           );
         })}
       </div>
+        <br/>
+      <div>
+      {teams.map(({ name }, index) => {
+          return (
+            <div key={index}>
+              <div className="toppings-list-item">
+                <div className="left-section">
+                  <input
+                    type="checkbox"
+                    id={`custom-checkbox-${index}`}
+                    name={name}
+                    value={name}
+                    checked={teamsState[index]}
+                    onChange={() => handleOnChangeTeams(index)}
+                  />
+                  <label htmlFor={`custom-checkbox-${index}`}>{name}</label>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <button onClick={savePreferences}>Save</button>
     </>
   );
 }

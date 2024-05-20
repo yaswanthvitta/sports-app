@@ -28,8 +28,6 @@ const token = localStorage.getItem("authToken") ?? "";
       
       const data = await response.json();
 
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('userData', JSON.stringify(data.user));
       navigate("/matches");
 
     } catch (error) {

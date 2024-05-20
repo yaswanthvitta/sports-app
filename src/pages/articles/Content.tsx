@@ -78,7 +78,7 @@ export const  GetArticle = (props : any)  => {
                                 </Dialog.Title>
                                 <div className="mt-2">
                                     <div>
-                                    <img src={article?.thumbnail} style={{ objectFit: "cover", objectPosition: "center" }} className="w-full h-[200px]" />
+                                    <img src={article?.thumbnail} style={{ objectFit: "cover", objectPosition: "center" }} className="" />
                                     </div>
                                     <div>
                                         {article?.content}
