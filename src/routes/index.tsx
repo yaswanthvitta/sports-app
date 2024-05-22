@@ -10,7 +10,7 @@ import SportContainer from "../pages/favourites/SportsContainer";
 import TeamContainer from "../pages/favourites/TeamsContainer";
 import Updatepass from "../pages/password";
 import ProtectedRoute from "./ProtectedRoute";
-import PreferenceItems from "../pages/preferences/UpdatePreferences";
+
 
 
 const Signin = React.lazy(() => import("../pages/signin"));
@@ -43,6 +43,7 @@ const router = createBrowserRouter([
       <Updatepass />
     </ProtectedRoute> )
   },
+  
   {
     path: "/",
     element: (
@@ -63,14 +64,6 @@ const router = createBrowserRouter([
         <Article/>
         </> ),
       },
-      {
-        path:"preferences",
-        element:(<>
-        <SportContainer/>
-       <TeamContainer/>
-       <ArticleContainer/>
-       <PreferenceItems/></>)
-      }
     ],
   }
 ]);

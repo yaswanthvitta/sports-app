@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 //import React from "react";
@@ -22,11 +23,9 @@ export default function ArticleItems(this: any) {
 
 
   const people = [
-    { id: 1, name: 'Durward Reynolds' },
-    { id: 2, name: 'Kenton Towne' },
-    { id: 3, name: 'Therese Wunsch' },
-    { id: 4, name: 'Benedict Kessler' },
-    { id: 5, name: 'Katelyn Rohan' },
+    { id: 1, name: 'Date' },
+    { id: 2, name: 'Title' },
+    { id: 3, name: 'Sport' },
   ]
   
   const state: any = useArticleState();
@@ -34,7 +33,7 @@ export default function ArticleItems(this: any) {
   const [selectedPerson, setSelectedPerson] = useState<{id: number;name:string}>(people[0]);
 
  
-  let { articles } = state;
+  const { articles } = state;
   const {isLoading, isError, errorMessage} = state;
 
   const sportslist: any = useSportState();
@@ -85,12 +84,33 @@ export default function ArticleItems(this: any) {
 
   function load (value:any){
     setSelectedPerson(value)
-    if (value.name==='Durward Reynolds'){
-    articles=articles.sort((a:any,b:any)=>a.date.localeCompare(b.date))
+    if (value.name==='Date'){
+      news.map(({name,posts})=>{
+        const x:any={};
+        x["name"]=name
+        x["posts"]=Object.values(posts).sort((a:any,b:any)=>a.date.localeCompare(b.date))
+        categories.push(x)
+      })
+      setnews(categories)
     }
-    if (value.name==='Kenton Towne'){
-      articles=articles.sort((a:any,b:any)=>a.title.localeCompare(b.title))
+    if (value.name==='Title'){
+      news.map(({name,posts})=>{
+        const x:any={};
+        x["name"]=name
+        x["posts"]=Object.values(posts).sort((a:any,b:any)=>a.title.localeCompare(b.title))
+        categories.push(x)
+      })
+      setnews(categories)
       }
+      if (value.name==='Sport'){
+        news.map(({name,posts})=>{
+          const x:any={};
+          x["name"]=name
+          x["posts"]=Object.values(posts).sort((a:any,b:any)=>a.sport.name.localeCompare(b.sport.name))
+          categories.push(x)
+        })
+        setnews(categories)
+        }
   }
   
 
@@ -169,7 +189,7 @@ if(sports.length>0 && (news.length===1||news.length===0)){
     <>
      
         <Listbox value={selectedPerson}   onChange={(e)=>load(e)}>
-          <ListboxButton className="w-[300px] h-12 border rounded-md py-2 px-3 my-2 ml-3 text-black-700 text-base text-left">{selectedPerson.name}</ListboxButton>
+          <ListboxButton className="w-[300px] h-12 border rounded-md py-2 px-3 my-2 ml-3 text-black-700 text-base text-left font-semibold">{"Sort By :  "+selectedPerson.name}</ListboxButton>
           <ListboxOptions anchor="bottom" className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {people.map((person) => (
               <ListboxOption key={person.id} value={person} className={({ active }) =>
@@ -189,19 +209,18 @@ if(sports.length>0 && (news.length===1||news.length===0)){
               <div className="flex w-[900px] justify-start pt-3 px-1">
                 <div className="w-[900px] max-w-md">
                   <TabGroup>
-                    <TabList className="flex gap-5">
+                    <TabList className="flex gap-5 mb-2">
                       {news.map(({ name }) => (
                         <Tab
                           key={name}
-                          className="w-[900px] rounded-full py-1 px-3 text-sm/6 font-semibold text-black focus:outline-none data-[selected]:bg-white/10 data-[hover]:bg-white/5 data-[selected]:data-[hover]:bg-white/10 data-[focus]:outline-1 data-[focus]:outline-black"
-                        >
+                          className="w-[900px] rounded-lg py-1 px-3 text-sm/6 font-semibold  focus:outline-none data-[selected]:bg-black/10 data-[hover]:bg-black/5 data-[selected]:data-[hover]:bg-black/10 data-[focus]:outline-1 data-[focus]:outline-none">
                           {name}
                         </Tab>
                       ))}
                     </TabList>
                     <TabPanels className="mt-1">
                       {news.map(({ name, posts }) => (
-                        <TabPanel key={name} className="rounded-xl bg-white/5 p-3">
+                        <TabPanel key={name} className="rounded-xl w-[950px] pt-3">
                             {Object.values(posts).map((article:any) => (
                               <div key={article.id} className="flex flex-row w-[900px] block bg-white border border-gray-200 roundedbackgroundImage:-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
                               <div className="mr-3 ">

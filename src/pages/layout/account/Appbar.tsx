@@ -1,10 +1,10 @@
 /* eslint-disable no-empty-pattern */
-import { UserCircleIcon , AdjustmentsVerticalIcon} from '@heroicons/react/24/outline'
+import { UserCircleIcon } from '@heroicons/react/24/outline'
 import Logo from "../../../assets/images/logo.png"
-import { Link, useLocation } from "react-router-dom"
 import { useState, useContext, Fragment } from 'react';
 import { ThemeContext } from "../../../context/theme";
 import { Disclosure, Menu, Transition, Switch } from '@headlessui/react'
+import Preferences from '../../preferences';
 
 
 const classNames = (...classes: string[]): string => classes.filter(Boolean).join(' ');
@@ -12,7 +12,6 @@ const classNames = (...classes: string[]): string => classes.filter(Boolean).joi
 const Appbar = () => {
 
 let userNavigation = []
-let navigation = []
 
     const authenticated = !!localStorage.getItem("authToken");
     if (authenticated) {
@@ -27,20 +26,9 @@ let navigation = []
           ]
     }
 
-    const { pathname } = useLocation()
     const { theme, setTheme } = useContext(ThemeContext)
     const [enabled, setEnabled] = useState(theme === 'dark')
 
-    if (authenticated) {
-        navigation = [
-            { name: 'Preferences', href: '/preferences', current: false, image:AdjustmentsVerticalIcon },
-        ]
-        }
-    else{
-        navigation = [
-            { name: 'Preferences', href: '/signin', current: false, image:AdjustmentsVerticalIcon },
-        ]
-        }
    
   const toggleTheme = () => {
     let newTheme = ''
@@ -70,27 +58,7 @@ let navigation = []
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-10 flex items-baseline space-x-4">
-                    {navigation.map((item) => { 
-                      const isCurrent = pathname.includes(item.href)
-
-                      return (
-                        <Link
-                          key={item.name}
-                          to={item.href}
-                          className={classNames(
-                            isCurrent
-                              ? 'bg-slate-50 text-blue-700'
-                              : 'text-slate-500 hover:text-blue-600',
-                            'rounded-md px-3 py-2 text-l font-medium'
-                          )}
-                          aria-current={isCurrent ? 'page' : undefined}
-                        > 
-                        <div style={{display:'flex'}}>
-                          <item.image className="h-6 w-6 mr-1" aria-hidden="true"/>
-                          {item.name}
-                        </div>
-                        </Link>
-                    )})}
+                    <Preferences/>
                   </div>
                 </div>
               </div>

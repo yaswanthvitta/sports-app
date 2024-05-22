@@ -135,7 +135,7 @@ export default function FavouriteItems() {
     <>
       <div>
           <Listbox value={selectedSport}   onChange={(e)=>filter(e)}>
-            <ListboxButton className="w-full h-12 border rounded-md py-2 px-3 my-2 ml-3 text-black-700 text-base text-left">{selectedSport.name}</ListboxButton>
+            <ListboxButton className="w-full h-12 border rounded-md py-2 px-3 my-2 ml-3 text-black-700 text-base text-left font-semibold ">{selectedSport.name}</ListboxButton>
             <ListboxOptions anchor="bottom" className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {sports.map((sport:any) => (
                 <ListboxOption key={sport.id} value={sport} className={({ active }) =>
@@ -152,7 +152,7 @@ export default function FavouriteItems() {
           </Listbox>
       <br/>
           <Listbox value={selectedTeam}   onChange={(e)=>filterTeam(e)}>
-            <ListboxButton className="w-full h-12 border rounded-md my-2 mb-2 ml-3 py-2 px-3  text-black-700 text-base text-left">{selectedTeam.name}</ListboxButton>
+            <ListboxButton className="w-full h-12 border rounded-md my-2 mb-2 ml-3 py-2 px-3  text-black-700 text-base text-left font-semibold ">{selectedTeam.name}</ListboxButton>
             <ListboxOptions anchor="bottom" className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {favouriteTeams.map((team:any) => (
                 <ListboxOption key={team.id} value={team} className={({ active }) =>
@@ -169,7 +169,7 @@ export default function FavouriteItems() {
           </Listbox>
       </div>
 
-      <div className="">
+      <div className="mt-9">
         {favouriteArticles.map((article: any) => (
           <div key={article.id} className=" w-[300px] block bg-white border border-gray-200 roundedbackgroundImage:-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
             <div className="p-5">
