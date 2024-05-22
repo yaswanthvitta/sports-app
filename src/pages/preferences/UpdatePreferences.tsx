@@ -8,9 +8,12 @@ import {  Fragment, useState } from "react";
 import { useArticleState } from "../../context/articles/context";
 import { API_ENDPOINT } from "../../config/constants";
 import { Dialog, Transition } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 
 export default function PreferenceItems() {
   const authenticated = !!localStorage.getItem("authToken");
+  
+  const navigate = useNavigate() 
 
   const token = localStorage.getItem("authToken") ?? "";
 
@@ -113,11 +116,9 @@ export default function PreferenceItems() {
   }
 
 
-  
 
 if(userData===null && sportsState.length>0 && teamsState.length>0){
 setUserData(fetchPreferences())
-savePreferences()
 }
 
 function yourPreferences(data:any){
@@ -171,6 +172,9 @@ async function savePreferences(){
         preferences={...preferences,[sports.length+index]:teams[index].name}
       }
     })
+    if(preferences===undefined){
+      preferences={}
+    }
 
     console.log(preferences)
 
@@ -195,8 +199,9 @@ async function savePreferences(){
     } catch (error) {
       console.error('preferences update failed:', error);
     }
-
+    navigate("/");
     closeModal();
+    
 }
  
 
