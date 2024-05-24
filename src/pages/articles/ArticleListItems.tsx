@@ -5,9 +5,9 @@ import { useState } from "react";
 import { useArticleState } from "../../context/articles/context";
 import { GetArticle } from "./Content";
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
-import { API_ENDPOINT } from "../../config/constants";
 import { useSportState } from "../../context/sports/context";
 import { useTeamState } from "../../context/teams/context";
+import { usePreferencesState } from "../../context/preferences/context";
 
 
 
@@ -15,7 +15,7 @@ import { useTeamState } from "../../context/teams/context";
 export default function ArticleItems(this: any) {
 
   const authenticated = !!localStorage.getItem("authToken");
-  const token = localStorage.getItem("authToken") ?? "";
+
   const[news,setnews]=useState([])
 
   const categories:any = [];
@@ -32,6 +32,8 @@ export default function ArticleItems(this: any) {
 
   const [selectedPerson, setSelectedPerson] = useState<{id: number;name:string}>(people[0]);
 
+  const [selectedPreferences, setSelectedPreferences] = useState<any>([]);
+
  
   const { articles } = state;
   const {isLoading, isError, errorMessage} = state;
@@ -43,42 +45,15 @@ export default function ArticleItems(this: any) {
   const teamslist: any = useTeamState();
   const { teams} = teamslist;
   const {isLoadingteam, isErrorteam, errorMessageteam} = teamslist;
+
+  const preference: any = usePreferencesState();
+  const { preferences} = preference;
+  const {isLoadingpref, isErrorpref, errorMessagepref} = preference;
+  console.log(preferences)
+  console.log('preference')
+
   
-  async function fetchPreferences(){
-
-  try {
-      
-    const response = await fetch(`${API_ENDPOINT}/user`, {
-      method: 'get',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-    });
-
-    if (!response.ok) {
-      throw new Error('preferences get failed');
-    }
-
-    console.log('preferences get successful');
-    
-    const data = await response.json();
-    console.log(data)
-    yourArticles(data);
-    return data;
-   
-  } catch (error) {
-    console.error('preferences get failed:', error);
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
+  
 
 
 
@@ -124,7 +99,7 @@ export default function ArticleItems(this: any) {
     return <span>{errorMessage}</span>;
   }
 
-  if ((teams.length === 0 && isLoadingteam)||(sports.length===0 && isLoadingsport)||(articles.length === 0 && isLoading)) {
+  if ((preferences.length === 0 && isLoadingpref)||(teams.length === 0 && isLoadingteam)||(sports.length===0 && isLoadingsport)||(articles.length === 0 && isLoading)) {
     return <span>Loading...</span>;
   }
  
@@ -137,9 +112,32 @@ export default function ArticleItems(this: any) {
     return <span>{errorMessageteam}</span>;
   }
 
+  if (isErrorpref) {
+    return <span>{errorMessagepref}</span>;
+  }
 
-if(authenticated && (news.length===0||news.length===sports.length)){
-  fetchPreferences()
+  if(sports.length>0 && (news.length===1||news.length===0)){
+    console.log(sports)
+    sports.map((sport:any)=>{
+      const x:any={};
+      x["name"]=sport.name
+      x["posts"]=[]
+      articles.map((article:any)=>{
+        if (article.sport.name===sport.name){
+          x["posts"].push(article)
+        }
+      })
+      categories.push(x)
+      
+    })
+    categories.push(...news)
+    setnews(categories)
+  }
+
+
+if(authenticated && (selectedPreferences!==preferences)){
+  yourArticles(Object.values(preferences))
+  setSelectedPreferences(preferences)
 }
 
 function yourArticles(data:any){
@@ -147,39 +145,24 @@ function yourArticles(data:any){
   x["name"]="your news"
   x["posts"]=[]
   articles.map((article:any)=>{
-    if (Object.values(data.preferences).includes(article.sport.name)){
+    if (data.includes(article.sport.name)){
       x["posts"].push(article)
     }
-    else if((article.teams.length==1)&&(Object.values(data.preferences).includes(article.teams[0].name))){
+    else if((article.teams.length==1)&&(data.includes(article.teams[0].name))){
       x["posts"].push(article)
     }
-    else if((article.teams.length==2)&&((Object.values(data.preferences).includes(article.teams[1].name))||(Object.values(data.preferences).includes(article.teams[1].name)))){
+    else if((article.teams.length==2)&&((data.includes(article.teams[0].name))||(data.includes(article.teams[1].name)))){
       x["posts"].push(article)
     }
   })
+  
   categories.push(x)
   setnews(categories)
 }
 
   
 
-if(sports.length>0 && (news.length===1||news.length===0)){
-  console.log(sports)
-  sports.map((sport:any)=>{
-    const x:any={};
-    x["name"]=sport.name
-    x["posts"]=[]
-    articles.map((article:any)=>{
-      if (article.sport.name===sport.name){
-        x["posts"].push(article)
-      }
-    })
-    categories.push(x)
-    
-  })
-  categories.push(...news)
-  setnews(categories)
-}
+
 
 
  

@@ -10,6 +10,7 @@ import SportContainer from "../pages/favourites/SportsContainer";
 import TeamContainer from "../pages/favourites/TeamsContainer";
 import Updatepass from "../pages/password";
 import ProtectedRoute from "./ProtectedRoute";
+import PreferenceContainer from "../pages/preferences/PreferenceContainer";
 
 
 
@@ -59,6 +60,7 @@ const router = createBrowserRouter([
         <MatchContainer/>
         <SportContainer/>
         <TeamContainer/>
+        <PreferenceContainer/>
         <LiveMatches/>
         <ArticleContainer/>
         <Article/>

@@ -6,16 +6,18 @@ import { useSportState } from "../../context/sports/context";
 import { useTeamState } from "../../context/teams/context";
 import {  Fragment, useState } from "react";
 import { useArticleState } from "../../context/articles/context";
-import { API_ENDPOINT } from "../../config/constants";
+//import { API_ENDPOINT } from "../../config/constants";
 import { Dialog, Transition } from "@headlessui/react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
+import { usePreferencesDispatch, usePreferencesState } from "../../context/preferences/context";
+import {  updatePreferences } from "../../context/preferences/actions";
 
 export default function PreferenceItems() {
   const authenticated = !!localStorage.getItem("authToken");
   
-  const navigate = useNavigate() 
+  // const navigate = useNavigate() 
 
-  const token = localStorage.getItem("authToken") ?? "";
+  //const token = localStorage.getItem("authToken") ?? "";
 
   const sportslist: any = useSportState();
 
@@ -25,6 +27,10 @@ export default function PreferenceItems() {
   const teamslist: any = useTeamState();
   const { teams} = teamslist;
   const {isLoadingteam, isErrorteam, errorMessageteam} = teamslist;
+
+  const preference: any = usePreferencesState();
+  const { preferences} = preference;
+  const {isLoadingpref, isErrorpref, errorMessagepref} = preference;
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -39,11 +45,9 @@ export default function PreferenceItems() {
 
   let [teamsState, setTeamsState] = useState<any>([])
 
-  const [userData, setUserData] = useState<any>(null)
+  let [userPreferences, setUserPreferences] = useState<any>(null)
 
-
-  
-
+  const dispatch=usePreferencesDispatch()
    
   const state: any = useArticleState();  
   const { articles } = state;
@@ -65,7 +69,7 @@ export default function PreferenceItems() {
 
 
 
-  if ((teams.length === 0 && isLoadingteam)||(sports.length===0 && isLoadingsport)||(articles.length === 0 && isLoading)) {
+  if ((preferences.length === 0 && isLoadingpref)||(teams.length === 0 && isLoadingteam)||(sports.length===0 && isLoadingsport)||(articles.length === 0 && isLoading)) {
     return <span>Loading...</span>;
   }
  
@@ -81,6 +85,10 @@ export default function PreferenceItems() {
     return <span>{errorMessageteam}</span>;
   }
 
+  if (isErrorpref) {
+    return <span>{errorMessagepref}</span>;
+  }
+
   if(sports.length>0 && sportsState.length===0){
     setSportsState(new Array(sports.length).fill(false))
   }
@@ -90,50 +98,28 @@ export default function PreferenceItems() {
   }
 
 
-  async function fetchPreferences(){
-
-    try {
-        
-      const response = await fetch(`${API_ENDPOINT}/user`, {
-        method: 'get',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-      });
-  
-      if (!response.ok) {
-        throw new Error('preferences get failed');
-      }
-  
-      console.log('preferences get successful');
-      
-      const data = await response.json();
-      console.log(data)
-      yourPreferences(data.preferences);
-      return data
-     
-    } catch (error) {
-      console.error('preferences get failed:', error);
-    }
-  }
 
 
 
-if(userData===null && sportsState.length>0 && teamsState.length>0){
-setUserData(fetchPreferences())
+
+if(userPreferences===null && sportsState.length>0 && teamsState.length>0){
+  setUserPreferences(yourPreferences(preferences))
 }
 
 function yourPreferences(data:any){
   sports.map((sport:any,index:any)=>{
-    if(Object.values(data).includes(sport.name)){
+    if(data.includes(sport.name)){
       sportsState[index]=true
     }
   })
   setSportsState(sportsState)
   teams.map((team:any,index:any)=>{
-    if(Object.values(data).includes(team.name)){
+    if(data.includes(team.name)){
     teamsState[index]=true
     }
   })
   setTeamsState(teamsState)
+  return data;
 }
 
 
@@ -177,29 +163,9 @@ async function savePreferences(){
     }
 
     console.log(preferences)
-
-    try {
-      
-      const response = await fetch(`${API_ENDPOINT}/user/preferences`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ preferences }),
-      });
-
-      if (!response.ok) {
-        throw new Error('preferences update failed');
-      }
-
-      console.log('preferences update successful');
-      
-      const data = await response.json();
-      console.log(data)
-      setUserData(data)
-
-    } catch (error) {
-      console.error('preferences update failed:', error);
-    }
-    navigate("/");
+    
+    updatePreferences(dispatch,preferences)
+    
     closeModal();
     
 }

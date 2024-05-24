@@ -7,12 +7,14 @@ import { Suspense } from "react";
 import { ArticleProvider } from "./context/articles/context";
 import { SportProvider } from "./context/sports/context";
 import { TeamProvider } from "./context/teams/context";
+import { PreferencesProvider } from "./context/preferences/context";
 const App = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
       className={`h-full w-full mx-auto py-2 ${theme === "dark" ? "dark" : ""}`}
     >
+      <PreferencesProvider>
       <SportProvider> 
         <TeamProvider>  
           <ArticleProvider>
@@ -24,6 +26,7 @@ const App = () => {
           </ArticleProvider>
         </TeamProvider>
       </SportProvider>
+      </PreferencesProvider>
     </div>
   );
 };
