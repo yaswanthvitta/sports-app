@@ -1,0 +1,13 @@
+.wrapper{
+    display: grid;
+    grid-auto-flow:column;
+    grid-auto-columns: 20rem;
+    justify-items: stretch;
+    animation: scroll 15s linear infinite;
+}
+
+@keyframes scroll{
+    to{
+        translate: calc(-4 *20rem);
+    }
+}

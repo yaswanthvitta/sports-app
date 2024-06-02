@@ -12,7 +12,8 @@ const App = () => {
   const { theme } = useContext(ThemeContext);
   return (
     <div
-      className={`h-full w-full mx-auto py-2 ${theme === "dark" ? "dark" : ""}`}
+      className={`bg-[#EEE7DF] text-[#2C121B] h-full w-full mx-auto py-2 ${theme === "dark" ? "dark" : ""}`}
+      
     >
       <PreferencesProvider>
       <SportProvider> 

@@ -205,7 +205,7 @@ function yourArticles(data:any){
                       {news.map(({ name, posts }) => (
                         <TabPanel key={name} className="rounded-xl w-[950px] pt-3">
                             {Object.values(posts).map((article:any) => (
-                              <div key={article.id} className="flex flex-row w-[900px] block bg-white border border-gray-200 roundedbackgroundImage:-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
+                              <div key={article.id} className="flex flex-row w-[900px] block bg-[#FBD3B7] border border-gray-200 roundedbackgroundImage:-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
                               <div className="mr-3 ">
                                 <img src={article.thumbnail} style={{ objectFit: "cover", objectPosition: "center" }} className="w-[170px] h-[200px]" alt="Thumbnail" />
                               </div>

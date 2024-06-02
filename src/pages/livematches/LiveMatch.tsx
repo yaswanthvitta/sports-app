@@ -40,7 +40,7 @@ export const  GetMatch = (props:any)  => {
   const  FetchMatch = (id : number)  => {
           useEffect(() => {
               fetchData(id);
-          }, []);
+          }, [id]);
     }
   
   const  refresh = (id : number)  => {
@@ -61,20 +61,20 @@ export const  GetMatch = (props:any)  => {
    return(
         <div
         key={List.id}
-        className=" w-[300px] block p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 m-3"
+        className=" w-[300px] block p-6 bg-[#FFAD42] border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 m-3"
       >
-        <div className="flex flex-row justify-between mb-5">
-          <p>{List.sportName}</p>
+        <div className="flex flex-row justify-between mb-5 ">
+          <p className="text-white font-bold">{List.sportName}</p>
           <ArrowPathRoundedSquareIcon className="h-6 w-6 text-gray-500 cursor-pointer" onClick={()=>refresh(List.id)}/>
         </div>
         <div className="flex flex-row justify-between">
           <div className="">
-            <p>{List.teams[0].name}</p>
-            <p>{List.teams[1].name}</p>
+            <p className=" text-white">{List.teams[0].name}</p>
+            <p className=" text-white">{List.teams[1].name}</p>
           </div>
           <div className="">
-            <p>{List.score[List.teams[0].name]}</p>
-            <p>{List.score[List.teams[1].name]}</p>
+            <p className=" text-white">{List.score[List.teams[0].name]}</p>
+            <p className=" text-white">{List.score[List.teams[1].name]}</p>
           </div>
         </div>
         </div>
