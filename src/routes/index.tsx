@@ -8,10 +8,9 @@ import ArticleContainer from "../pages/articles/ArticleContainer";
 import Article from "../pages/articles";
 import SportContainer from "../pages/favourites/SportsContainer";
 import TeamContainer from "../pages/favourites/TeamsContainer";
-import Updatepass from "../pages/password";
+const Updatepass = React.lazy(() => import("../pages/password"));
 import ProtectedRoute from "./ProtectedRoute";
 import PreferenceContainer from "../pages/preferences/PreferenceContainer";
-
 
 
 const Signin = React.lazy(() => import("../pages/signin"));
@@ -52,6 +51,7 @@ const router = createBrowserRouter([
         <AccountLayout/>
         </>
     ),
+    ErrorBoundary: () => <>Failed to load the page</>,
      children:[
       {
         path: "/matches",

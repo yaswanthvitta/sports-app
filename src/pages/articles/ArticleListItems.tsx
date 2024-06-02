@@ -49,8 +49,7 @@ export default function ArticleItems(this: any) {
   const preference: any = usePreferencesState();
   const { preferences} = preference;
   const {isLoadingpref, isErrorpref, errorMessagepref} = preference;
-  console.log(preferences)
-  console.log('preference')
+  
 
   
   

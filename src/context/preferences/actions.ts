@@ -12,8 +12,7 @@ export const fetchPreference = async (dispatch: any) => {
       });
 
     const data = await response.json();
-    console.log(Object.values(data.preferences))
-    console.log('data')
+
 
     dispatch({ type: "FETCH_PREFERENCES_SUCCESS", payload: Object.values(data.preferences) });
   } catch (error) {

@@ -105,11 +105,11 @@ export default function FavouriteItems() {
     
   }
 
-  if( selectedSport===undefined && sports!==undefined){
+  if( selectedSport===undefined && sports.length!==0){
     setSelectedSport(sports[0])
     return <span>Loading...</span>;
   }
-  if( selectedTeam===undefined && teams!==undefined){
+  if( selectedTeam===undefined && teams.length!==0){
     setSelectedTeam(teams[0])
     return <span>Loading...</span>;
   }
