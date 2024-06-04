@@ -143,14 +143,38 @@ function yourArticles(data:any){
   const x:any={};
   x["name"]="your news"
   x["posts"]=[]
+
+  sports.map((sport:any)=>{
+  const onlySport: any[]=[]
+  const sportAndTeam: any[]=[]
+    if (data.includes(sport.name)){
+      articles.map((article:any)=>{
+        if((article.sport.name===sport.name) && (((article.teams.length===1)&&(data.includes(article.teams[0].name))) || ((article.teams.length===2)&&((data.includes(article.teams[0].name))||(data.includes(article.teams[1].name)))))){
+           sportAndTeam.push(article)
+        }
+        else if(article.sport.name===sport.name){
+          onlySport.push(article)
+        }
+      })
+    
+      if(sportAndTeam.length>0){
+        Array.prototype.push.apply(x["posts"], sportAndTeam);
+      }
+      else{
+        if(onlySport.length>0){
+          Array.prototype.push.apply(x["posts"], onlySport);
+        }
+      }
+      
+    }
+  })
+
+
   articles.map((article:any)=>{
-    if (data.includes(article.sport.name)){
+     if((article.teams.length==1)&&!(data.includes(article.sport.name))&&(data.includes(article.teams[0].name))){
       x["posts"].push(article)
     }
-    else if((article.teams.length==1)&&(data.includes(article.teams[0].name))){
-      x["posts"].push(article)
-    }
-    else if((article.teams.length==2)&&((data.includes(article.teams[0].name))||(data.includes(article.teams[1].name)))){
+    else if((article.teams.length==2)&&!(data.includes(article.sport.name))&&((data.includes(article.teams[0].name))||(data.includes(article.teams[1].name)))){
       x["posts"].push(article)
     }
   })

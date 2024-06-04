@@ -13,7 +13,7 @@ export default function FavouriteItems() {
   const authenticated = !!localStorage.getItem("authToken");
   
   const sportslist: any = useSportState();
-  let favteam :any  , favarticle;
+  let favteam :any ,noTeam:any  , favarticle;
 
   const { sports} = sportslist;
   const {isLoadingsport, isErrorsport, errorMessagesport} = sportslist;
@@ -32,12 +32,18 @@ export default function FavouriteItems() {
   const { preferences} = preference;
   const {isLoadingpref, isErrorpref, errorMessagepref} = preference;
 
+  const [favouriteSports , setFavouriteSports] = useState([]);
 
-  const [selectedSport, setSelectedSport] = useState(sports[0]);
+  const [selectedSport, setSelectedSport] = useState();
+  console.log(selectedSport)
+  console.log("2")
 
-  const [selectedTeam, setSelectedTeam] = useState(teams[0]);
+  const [selectedTeam, setSelectedTeam] = useState();
+  console.log(selectedTeam)
+  console.log("3")
 
-  const [favouriteSports , setFavouriteSports] = useState(sports);
+  
+
 
   const [favouriteTeams , setFavouriteTeams] = useState([]);
 
@@ -77,51 +83,53 @@ export default function FavouriteItems() {
     const psports = sports.filter((t:any) => {
       return Object.values(preferences).includes(t.name);
   })
+  teams.map((t:any)=>{
+    if(Object.values(preferences).includes(t.name) && !Object.values(preferences).includes(t.plays))
+      sports.map((s:any)=>{
+       if(s.name===t.plays){
+        psports.push(s)
+       }
+    })
+  })
+  
   if(Object.values(psports).length===0){
     return <span>Select any sport as preferences to view Favourites according to your preferences</span>
   }
-    setSelectedPreferences(preferences)
+    
     setFavouriteSports(psports)
     setSelectedSport(psports[0])
+
+    
+
     favteam = teams.filter((t:any) => {
-      return t.plays === psports[0].name;
+      return t.plays === psports[0].name && Object.values(preferences).includes(t.name);
   })
-  setFavouriteTeams(favteam)
-  setSelectedTeam(favteam[0])
-  
-  favarticle = articles.filter((a:any)=>{
-      if(a.teams.length>1){
-      return ((favteam[0].name === a.teams[0].name)|| (favteam[0].name === a.teams[1].name))
+    if(Object.values(favteam).length===0){
+      
+      noTeam =teams.filter((t:any) => {
+        return t.plays === psports[0].name;
+      });
+        setFavouriteTeams(noTeam)
+        setSelectedTeam(noTeam[0])
+
+        favarticle = articles.filter((a:any)=>{
+          if(a.teams.length>1){
+          return ((noTeam[0].name === a.teams[0].name)|| (noTeam[0].name === a.teams[1].name))
+          }
+          if(a.teams.length===1){
+              return ((noTeam[0].name === a.teams[0].name))
+           }
+          if(a.teams.length==0){
+              return ((noTeam[0].plays === a.sport.name))
+          }
+      }) 
+
       }
-      if(a.teams.length===1){
-          return ((favteam[0].name === a.teams[0].name))
-       }
-      if(a.teams.length==0){
-          return ((favteam[0].plays === a.sport.name))
-      }
-  }) 
+      else{
+        setFavouriteTeams(favteam)
+        setSelectedTeam(favteam[0])
 
-    setFavouriteArticles(favarticle)
-    
-  }
-
-  if( selectedSport===undefined && sports.length!==0){
-    setSelectedSport(sports[0])
-    return <span>Loading...</span>;
-  }
-  if( selectedTeam===undefined && teams.length!==0){
-    setSelectedTeam(teams[0])
-    return <span>Loading...</span>;
-  }
-
-  if( favouriteTeams.length===0){
-    favteam = teams.filter((t:any) => {
-        return t.plays === sports[0].name;
-    })
-    setFavouriteTeams(favteam)
-    setSelectedTeam(favteam[0])
-    
-    favarticle = articles.filter((a:any)=>{
+      favarticle = articles.filter((a:any)=>{
         if(a.teams.length>1){
         return ((favteam[0].name === a.teams[0].name)|| (favteam[0].name === a.teams[1].name))
         }
@@ -133,14 +141,51 @@ export default function FavouriteItems() {
         }
     }) 
 
-      setFavouriteArticles(favarticle)
-}
+      }
 
-  function filter(value:any){
-    setSelectedSport(value)
-      favteam = teams.filter((t:any) => {
-        return t.plays === value.name;
+    
+    
+    setFavouriteArticles(favarticle)
+    setSelectedPreferences(preferences)
+    
+  }
+
+
+  if( selectedSport===undefined && sports.length!==0 && !authenticated){
+    setSelectedSport(sports[0])
+    return <span>Loading...</span>;
+  }
+  if( selectedTeam===undefined && teams.length!==0 ){
+    setSelectedTeam(teams[0])
+    return <span>Loading...</span>;
+  }
+
+  if( favouriteTeams.length===0){
+    favteam = teams.filter((t:any) => {
+        return t.plays === sports[0].name && Object.values(preferences).includes(t.name);
+    })
+
+    if(Object.values(favteam).length===0){
+      noTeam =teams.filter((t:any) => {
+        return t.plays === sports[0].name;
       });
+      setFavouriteTeams(noTeam)
+        setSelectedTeam(noTeam[0])
+
+        favarticle = articles.filter((a:any)=>{
+          if(a.teams.length>1){
+          return ((noTeam[0].name === a.teams[0].name)|| (noTeam[0].name === a.teams[1].name))
+          }
+          if(a.teams.length===1){
+              return ((noTeam[0].name === a.teams[0].name))
+           }
+          if(a.teams.length==0){
+              return ((noTeam[0].plays === a.sport.name))
+          }
+      }) 
+
+      }
+      else{
       setFavouriteTeams(favteam)
       setSelectedTeam(favteam[0])
 
@@ -155,7 +200,60 @@ export default function FavouriteItems() {
             return ((favteam[0].plays === a.sport.name))
         }
     }) 
-      console.log(favarticle)
+
+      }
+
+      setFavouriteArticles(favarticle)
+}
+
+  function filter(value:any){
+
+    setSelectedSport(value)
+    console.log(selectedSport)
+    console.log("1")
+      favteam = teams.filter((t:any) => {
+        return t.plays === value.name && Object.values(preferences).includes(t.name);
+      });
+
+      if(Object.values(favteam).length===0){
+        noTeam =teams.filter((t:any) => {
+          return t.plays === value.name;
+        });
+        setFavouriteTeams(noTeam)
+        setSelectedTeam(noTeam[0])
+
+        favarticle = articles.filter((a:any)=>{
+          if(a.teams.length>1){
+          return ((noTeam[0].name === a.teams[0].name)|| (noTeam[0].name === a.teams[1].name))
+          }
+          if(a.teams.length===1){
+              return ((noTeam[0].name === a.teams[0].name))
+           }
+          if(a.teams.length==0){
+              return ((noTeam[0].plays === a.sport.name))
+          }
+      }) 
+
+      }
+      else{
+      setFavouriteTeams(favteam)
+      setSelectedTeam(favteam[0])
+
+      favarticle = articles.filter((a:any)=>{
+        if(a.teams.length>1){
+        return ((favteam[0].name === a.teams[0].name)|| (favteam[0].name === a.teams[1].name))
+        }
+        if(a.teams.length===1){
+            return ((favteam[0].name === a.teams[0].name))
+         }
+        if(a.teams.length==0){
+            return ((favteam[0].plays === a.sport.name))
+        }
+    }) 
+
+      }
+
+      
       setFavouriteArticles(favarticle)
   }
 
