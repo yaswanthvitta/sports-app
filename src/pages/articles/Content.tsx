@@ -72,7 +72,7 @@ export const  GetArticle = (props : any)  => {
                             leaveFrom="opacity-100 scale-100"
                             leaveTo="opacity-0 scale-95"
                         >
-                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                            <Dialog.Panel className="w-[800px] transform overflow-hidden rounded-2xl bg-[#EEE7DF] text-[#2C121B] p-6 text-left align-middle shadow-xl transition-all">
                             <div className="flex flex-row justify-end">
                                 <XCircleIcon onClick={closeModal} className="h-6 w-6 text-gray-500" />
                             </div>
@@ -86,7 +86,7 @@ export const  GetArticle = (props : any)  => {
                                     <div className="mr-3 ">
                                         <img src={article?.thumbnail} style={{ objectFit: "cover", objectPosition: "center" }} className="mt-4 mb-3 w-[300px] h-[300px]" alt="Thumbnail" />
                                     </div>
-                                    <div className="flex-1">
+                                    <div className="flex-1 leading-loose m-4">
                                         {article?.content}
                                     </div>
                                 </div>
