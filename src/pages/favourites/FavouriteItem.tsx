@@ -334,13 +334,15 @@ export default function FavouriteItems() {
           </Listbox>
       </div>
 
-      <div className="mt-9">
+      <div className="mt-9 ">
         {favouriteArticles.map((article: any) => (
-          <div key={article.id} className=" w-[350px] h-[200px] block bg-[#FBD3B7] border border-gray-200 roundedbackgroundImage:-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
-            <div className="p-5">
+          <div key={article.id} className="relative w-[350px] h-[200px] block bg-[#FBD3B7] border border-gray-200 roundedbackgroundImage:-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
+            <div className="p-5 ">
+              <div>
               <p className="m-1 font-semibold">{article.sport.name}</p>
               <p className="m-1 font-semibold text-lg">{article.title} !!!</p>
-              <div className="flex flex-row justify-end pr-5 mt-8">
+              </div>
+              <div className=" absolute bottom-0 right-1  pr-5 mb-4">
                 <GetArticle{...{id:article.id}}/>
               </div>
             </div>
