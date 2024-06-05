@@ -32,15 +32,15 @@ export default function FavouriteItems() {
   const { preferences} = preference;
   const {isLoadingpref, isErrorpref, errorMessagepref} = preference;
 
-  const [favouriteSports , setFavouriteSports] = useState([]);
+  const [favouriteSports , setFavouriteSports] = useState<any>([]);
 
-  const [selectedSport, setSelectedSport] = useState();
+  const [selectedSport, setSelectedSport] = useState<any>();
   console.log(selectedSport)
   console.log("2")
 
-  const [selectedTeam, setSelectedTeam] = useState();
+  const [selectedTeam, setSelectedTeam] = useState<any>();
   console.log(selectedTeam)
-  console.log("3")
+  console.log("1p")
 
   
 
@@ -97,7 +97,7 @@ export default function FavouriteItems() {
   }
     
     setFavouriteSports(psports)
-    setSelectedSport(psports[0])
+    setSelectedSport({...psports[0]})
 
     
 
@@ -128,6 +128,7 @@ export default function FavouriteItems() {
       else{
         setFavouriteTeams(favteam)
         setSelectedTeam(favteam[0])
+        
 
       favarticle = articles.filter((a:any)=>{
         if(a.teams.length>1){
@@ -144,19 +145,24 @@ export default function FavouriteItems() {
       }
 
     
-    
     setFavouriteArticles(favarticle)
     setSelectedPreferences(preferences)
     
   }
 
+  console.log("hi if cond" + selectedSport)
 
   if( selectedSport===undefined && sports.length!==0 && !authenticated){
     setSelectedSport(sports[0])
     return <span>Loading...</span>;
   }
   if( selectedTeam===undefined && teams.length!==0 ){
+
     setSelectedTeam(teams[0])
+    if(authenticated){
+    setSelectedTeam(favouriteTeams[0])
+    }
+    console.log(teams[0])
     return <span>Loading...</span>;
   }
 
@@ -171,6 +177,8 @@ export default function FavouriteItems() {
       });
       setFavouriteTeams(noTeam)
         setSelectedTeam(noTeam[0])
+        
+
 
         favarticle = articles.filter((a:any)=>{
           if(a.teams.length>1){
@@ -188,6 +196,7 @@ export default function FavouriteItems() {
       else{
       setFavouriteTeams(favteam)
       setSelectedTeam(favteam[0])
+      
 
       favarticle = articles.filter((a:any)=>{
         if(a.teams.length>1){
@@ -210,7 +219,6 @@ export default function FavouriteItems() {
 
     setSelectedSport(value)
     console.log(selectedSport)
-    console.log("1")
       favteam = teams.filter((t:any) => {
         return t.plays === value.name && Object.values(preferences).includes(t.name);
       });
@@ -221,6 +229,8 @@ export default function FavouriteItems() {
         });
         setFavouriteTeams(noTeam)
         setSelectedTeam(noTeam[0])
+        
+
 
         favarticle = articles.filter((a:any)=>{
           if(a.teams.length>1){
@@ -238,6 +248,8 @@ export default function FavouriteItems() {
       else{
       setFavouriteTeams(favteam)
       setSelectedTeam(favteam[0])
+    
+
 
       favarticle = articles.filter((a:any)=>{
         if(a.teams.length>1){
@@ -261,6 +273,8 @@ export default function FavouriteItems() {
   function filterTeam(value:any){
     
       setSelectedTeam(value)
+  
+
 
       favarticle = articles.filter((a:any)=>{
         if(a.teams.length>1){
@@ -286,7 +300,7 @@ export default function FavouriteItems() {
     <>
       <div>
           <Listbox value={selectedSport}   onChange={(e)=>filter(e)}>
-            <ListboxButton className="w-full h-12 border rounded-md py-2 px-3 my-2 ml-3 text-black-700 text-base text-left font-semibold ">{selectedSport.name}</ListboxButton>
+            <ListboxButton className="w-full h-12 border rounded-md py-2 px-3 my-2 ml-3 text-black-700 text-base text-left font-semibold ">{selectedSport!.name}</ListboxButton>
             <ListboxOptions anchor="bottom" className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {favouriteSports.map((sport:any) => (
                 <ListboxOption key={sport.id} value={sport} className={({ active }) =>
@@ -303,7 +317,7 @@ export default function FavouriteItems() {
           </Listbox>
       <br/>
           <Listbox value={selectedTeam}   onChange={(e)=>filterTeam(e)}>
-            <ListboxButton className="w-full h-12 border rounded-md my-2 mb-2 ml-3 py-2 px-3  text-black-700 text-base text-left font-semibold ">{selectedTeam.name}</ListboxButton>
+            <ListboxButton className="w-full h-12 border rounded-md my-2 mb-2 ml-3 py-2 px-3  text-black-700 text-base text-left font-semibold ">{selectedTeam!.name}</ListboxButton>
             <ListboxOptions anchor="bottom" className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
               {favouriteTeams.map((team:any) => (
                 <ListboxOption key={team.id} value={team} className={({ active }) =>
