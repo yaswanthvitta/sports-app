@@ -76,7 +76,7 @@ export default function FavouriteItems() {
  }
 
   if(authenticated && Object.values(preferences).length===0){
-      return <span>No Favourites according to your preferences</span>
+      return <p className="mt-9 font-semibold">No Favourites according to your preferences</p>
   }
 
   if((selectedPreferences!==preferences) && authenticated){
@@ -336,12 +336,11 @@ export default function FavouriteItems() {
 
       <div className="mt-9">
         {favouriteArticles.map((article: any) => (
-          <div key={article.id} className=" w-[300px] block bg-[#FBD3B7] border border-gray-200 roundedbackgroundImage:-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
+          <div key={article.id} className=" w-[350px] h-[200px] block bg-[#FBD3B7] border border-gray-200 roundedbackgroundImage:-lg shadow dark:bg-gray-800 dark:border-gray-700 m-3">
             <div className="p-5">
-              <p className="m-1">{article.sport.name}</p>
-              <p className="m-1">{article.title}</p>
-              <div className="flex flex-row justify-between pr-5 mt-2">
-                <p>{article.date.substring(0, 10)}</p>
+              <p className="m-1 font-semibold">{article.sport.name}</p>
+              <p className="m-1 font-semibold text-lg">{article.title} !!!</p>
+              <div className="flex flex-row justify-end pr-5 mt-8">
                 <GetArticle{...{id:article.id}}/>
               </div>
             </div>

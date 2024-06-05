@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { API_ENDPOINT } from "../../config/constants";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment } from "react/jsx-runtime";
+import { XCircleIcon } from "@heroicons/react/24/outline";
 
 
 export interface Article {
@@ -44,7 +45,7 @@ export const  GetArticle = (props : any)  => {
    return(
         <>
 
-            <button onClick={openModal} id="{article.id}">Read-More ...</button>
+            <button onClick={openModal} id="{article.id}" className="rounded-md bg-[#FFAD42] px-4 py-2 text-sm font-medium text-white hover:bg-opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">Read-More ...</button>
 
             <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -59,6 +60,7 @@ export const  GetArticle = (props : any)  => {
                 >
                     <div className="fixed inset-0 bg-black bg-opacity-25" />
                 </Transition.Child>
+                
                 <div className="fixed inset-0 overflow-y-auto">
                     <div className="flex min-h-full items-center justify-center p-4 text-center">
                         <Transition.Child
@@ -71,23 +73,24 @@ export const  GetArticle = (props : any)  => {
                             leaveTo="opacity-0 scale-95"
                         >
                             <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                            <div className="flex flex-row justify-end">
+                                <XCircleIcon onClick={closeModal} className="h-6 w-6 text-gray-500" />
+                            </div>
                                 <Dialog.Title
                                     as="h3"
                                     className="text-lg font-medium leading-6 text-gray-900"
                                 >
                                     {article?.title}
                                 </Dialog.Title>
-                                <div className="mt-2">
-                                    <div>
-                                    <img src={article?.thumbnail} style={{ objectFit: "cover", objectPosition: "center" }} className="" />
+                                    <div className="flex flex-col text-justify items-center">
+                                    <div className="mr-3 ">
+                                        <img src={article?.thumbnail} style={{ objectFit: "cover", objectPosition: "center" }} className="mt-4 mb-3 w-[300px] h-[300px]" alt="Thumbnail" />
                                     </div>
-                                    <div>
+                                    <div className="flex-1">
                                         {article?.content}
                                     </div>
-                                    
-                                    <button onClick={closeModal}>close </button>
-
                                 </div>
+                                <button onClick={closeModal} className="rounded-md bg-[#FFAD42] m-3 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">close </button>
                             </Dialog.Panel>
                         </Transition.Child>
                     </div>

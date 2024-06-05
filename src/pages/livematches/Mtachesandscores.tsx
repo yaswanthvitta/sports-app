@@ -35,7 +35,7 @@ export default function Matchesandscores() {
 
   return (
     <div>
-      <h1 className="font semi bold">Matches & scores</h1>
+      <h1 className="font-semibold text-lg">Matches & scores</h1>
       <div className="ml-2"  style={{overflow:"hidden"}}>
       <div className="flex flex-row wrapper p-2">
       {matches

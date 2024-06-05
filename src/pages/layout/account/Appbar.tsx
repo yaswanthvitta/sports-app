@@ -23,6 +23,7 @@ let userNavigation = []
     else{
         userNavigation = [ 
             { name: 'Sign in', href: '/signin' },
+            { name: 'Sign up', href: '/signup' }
           ]
     }
 
@@ -99,7 +100,7 @@ let userNavigation = []
                                 href={item.href}
                                 className={classNames(
                                   active ? 'bg-gray-100' : '',
-                                  'block px-4 py-2 text-sm text-gray-700'
+                                  'block px-4 py-2 text-sm text-gray-700 font-semibold'
                                 )}
                               >
                                 {item.name}

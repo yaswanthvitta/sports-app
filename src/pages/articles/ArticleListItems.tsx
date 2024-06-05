@@ -233,9 +233,9 @@ function yourArticles(data:any){
                                 <img src={article.thumbnail} style={{ objectFit: "cover", objectPosition: "center" }} className="w-[170px] h-[200px]" alt="Thumbnail" />
                               </div>
                               <div className="p-5 flex-1">
-                                <p className="m-1">{article.sport.name}</p>
-                                <p className="m-1">{article.title}</p>
-                                <p className="m-1">{article.summary}.....</p>
+                                <p className="m-1 font-semibold ">{article.sport.name}</p>
+                                <p className="m-1 font-semibold text-lg">{article.title}</p>
+                                <p className="m-1 text-justify">{article.summary}.....</p>
                                 <div className="flex flex-row justify-between pr-5 mt-2">
                                   <p>{article.date.substring(0, 10)}</p>
                                   <GetArticle{...{id:article.id}}/>

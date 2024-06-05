@@ -206,20 +206,21 @@ async function savePreferences(){
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-[800px]  transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    Create new project
+                    Preferences
                   </Dialog.Title>
                   <div className="mt-2">
-                  <div>
+                    <p className="font-semibold mt-3 mb-3">Sports</p>
+                  <div className="flex flex-wrap">
                         {sports.map(( sport:any , index:any) => {
                             return (
                               <div key={index}>
                                 <div className="toppings-list-item">
-                                  <div className="left-section">
+                                  <div className="left-section m-3 text-l font-semibold">
                                     <input
                                       type="checkbox"
                                       id={`custom-checkbox-${index}`}
@@ -227,6 +228,7 @@ async function savePreferences(){
                                       value={sport.name}
                                       checked={sportsState[index]}
                                       onChange={() => handleOnChange(index)}
+                                      className="m-2"
                                     />
                                     <label htmlFor={`custom-checkbox-${index}`}>{sport.name}</label>
                                   </div>
@@ -236,12 +238,13 @@ async function savePreferences(){
                           })}
                         </div>
                           <br/>
-                        <div>
+                          <p className="font-semibold mt-3 mb-3">Teams</p>
+                        <div className="flex flex-wrap">
                         {teams.map((team:any , index:any) => {
                             return (
                               <div key={sports.length+index}>
                                 <div className="toppings-list-item">
-                                  <div className="left-section">
+                                  <div className="left-section m-3 text-l font-semibold">
                                     <input
                                       type="checkbox"
                                       id={`custom-checkbox-${sports.length+index}`}
@@ -249,6 +252,7 @@ async function savePreferences(){
                                       value={team.name}
                                       checked={teamsState[index]}
                                       onChange={() => handleOnChangeTeams(index)}
+                                      className="m-2"
                                     />
                                     <label htmlFor={`custom-checkbox-${sports.length+index}`}>{team.name}</label>
                                   </div>
@@ -257,10 +261,10 @@ async function savePreferences(){
                             );
                           })}
                         </div>
-                      <button type="submit" onClick={savePreferences} id='submitNewProjectBtn' className="inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 mr-2 text-sm font-medium text-white hover:bg-blue-500 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+                      <button type="submit" onClick={savePreferences} id='submitNewProjectBtn' className="inline-flex mr-3 justify-center rounded-md border border-transparent bg-orange-100 px-4 py-2 text-sm font-medium text-orange-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
                         Save
                       </button>
-                      <button type="submit" onClick={closeModal} className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
+                      <button type="submit" onClick={closeModal} className="inline-flex justify-center rounded-md border border-transparent bg-orange-100 px-4 py-2 text-sm font-medium text-orange-900 hover:bg-orange-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2">
                         Cancel
                       </button>
                   </div>

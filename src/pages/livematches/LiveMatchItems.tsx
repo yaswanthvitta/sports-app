@@ -56,8 +56,8 @@ export default function LiveMatchItems() {
     })
     if(lmatches.length==0){
       return (<>
-      <p className="mb-2">Live Matches</p>
-      <p className="mb-2">No live matchec according to your preferences</p>
+      <h1 className="font-semibold text-lg">Live Matches</h1>
+      <p className="mb-2 font-semibold">No live matchec according to your preferences</p>
       </>)
     }
     setSelectedMatches(pmatches)
@@ -69,7 +69,7 @@ export default function LiveMatchItems() {
 
   return (
     <div>
-      <h1 className="font semi bold">Live Matches</h1>
+      <h1 className="font-semibold text-lg">Live Matches</h1>
     <div className="flex flex-row">
       {selectedMatches
         .filter((match:any) => {
